@@ -1,14 +1,12 @@
 package com.stefanini.resources;
 
 import com.stefanini.dao.usuario.UsuarioDAO;
+import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
 import com.stefanini.model.Usuario;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -22,6 +20,15 @@ public class UsuarioResource {
     @Inject
     public UsuarioResource(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response create(UsuarioCreateDTO dto) {
+        var usuario = new Usuario(dto);
+        usuarioDAO.save(usuario);
+        return Response.ok(new UsuarioDetailsDTO(usuario)).build();
     }
 
     @GET
