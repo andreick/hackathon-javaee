@@ -7,6 +7,7 @@ import com.stefanini.model.Usuario;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -27,5 +28,13 @@ public class UsuarioResource {
     public List<UsuarioDetailsDTO> listAll() {
         List<Usuario> usuarios = usuarioDAO.listAll();
         return usuarios.stream().map(UsuarioDetailsDTO::new).collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public UsuarioDetailsDTO read(@PathParam("id") Long id) {
+        Usuario usuario = usuarioDAO.findById(id);
+        return new UsuarioDetailsDTO(usuario);
     }
 }
