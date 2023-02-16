@@ -25,7 +25,7 @@ public class Usuario {
     private String senha;
 
     @Column(name = "data_nascimento")
-    private LocalDate dataDeNascimento;
+    private LocalDate dataNascimento;
 
     public Long getId() {
         return id;
@@ -47,8 +47,8 @@ public class Usuario {
         return senha;
     }
 
-    public LocalDate getDataDeNascimento() {
-        return dataDeNascimento;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
     @Override
@@ -72,6 +72,6 @@ public class Usuario {
                 "login = " + login + ", " +
                 "email = " + email + ", " +
                 "senha = " + senha + ", " +
-                "dataDeNascimento = " + dataDeNascimento + ")";
+                "dataDeNascimento = " + dataNascimento + ")";
     }
 }
