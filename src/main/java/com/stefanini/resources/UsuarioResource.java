@@ -1,6 +1,6 @@
 package com.stefanini.resources;
 
-import com.stefanini.dao.usuario.UsuarioDAO;
+import com.stefanini.dao.UsuarioDAO;
 import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
 import com.stefanini.model.Usuario;
