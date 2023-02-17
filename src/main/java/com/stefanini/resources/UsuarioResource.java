@@ -7,8 +7,10 @@ import com.stefanini.model.Usuario;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,10 +27,16 @@ public class UsuarioResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(UsuarioCreateDTO dto) {
+    public Response create(UsuarioCreateDTO dto, @Context UriInfo uriInfo) {
         var usuario = new Usuario(dto);
         usuarioDAO.save(usuario);
-        return Response.ok(new UsuarioDetailsDTO(usuario)).build();
+
+        var uriBuilder = uriInfo.getBaseUriBuilder();
+        uriBuilder.path(usuario.getId().toString());
+
+        var body = new UsuarioDetailsDTO(usuario);
+
+        return Response.created(uriBuilder.build()).entity(body).build();
     }
 
     @GET
