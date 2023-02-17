@@ -14,16 +14,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
-    @Column(name = "login")
+    @Column(name = "login", nullable = false, length = 20, unique = true)
     private String login;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false, length = 10)
     private String senha;
 
     @Column(name = "data_nascimento")
