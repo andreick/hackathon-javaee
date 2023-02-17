@@ -1,5 +1,7 @@
 package com.stefanini.model;
 
+import com.stefanini.dto.usuario.UsuarioCreateDTO;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -26,6 +28,22 @@ public class Usuario {
 
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+
+    public Usuario() {
+    }
+
+    public Usuario(Long id, String nome, String login, String email, String senha, LocalDate dataNascimento) {
+        this.id = id;
+        this.nome = nome;
+        this.login = login;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Usuario(UsuarioCreateDTO dto) {
+        this(null, dto.getNome(), dto.getLogin(), dto.getEmail(), dto.getSenha(), dto.getDataNascimento());
+    }
 
     public Long getId() {
         return id;
