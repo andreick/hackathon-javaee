@@ -1,6 +1,7 @@
 package com.stefanini.dto.usuario;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.stefanini.model.Usuario;
 
 import java.time.LocalDate;
 
@@ -21,6 +22,10 @@ public class UsuarioCreateDTO {
         this.dataNascimento = dataNascimento;
         this.login = login;
         this.senha = senha;
+    }
+
+    public Usuario toUsuario() {
+        return new Usuario(null, nome, login, email, senha, dataNascimento);
     }
 
     public String getNome() {

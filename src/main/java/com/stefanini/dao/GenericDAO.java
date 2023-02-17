@@ -10,15 +10,15 @@ import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class GenericDAO<T, I> implements CrudDAO<T, I> {
+public class GenericDAO<T, I>  {
 
     @PersistenceContext(unitName = "PU")
     EntityManager em;
-    
+
     Class<T> clazz;
 
     public GenericDAO() {
-        clazz = ((Class<T>) ((ParameterizedType) getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        clazz = ((Class) ((ParameterizedType) getClass().getSuperclass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
     @Transactional
@@ -30,9 +30,9 @@ public class GenericDAO<T, I> implements CrudDAO<T, I> {
         return em.find(clazz, id);
     }
 
-    public <T> List<T> listAll(){
+    public List<T> listAll(){
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = (CriteriaQuery<T>) builder.createQuery(clazz);
+        CriteriaQuery<T> query = builder.createQuery(clazz);
         query.from(clazz);
         return em.createQuery(query).getResultList();
     }
@@ -48,8 +48,8 @@ public class GenericDAO<T, I> implements CrudDAO<T, I> {
         em.remove(t);
     }
 
-    public <T> TypedQuery<T> createQuery(String query) {
-        return (TypedQuery<T>) em.createQuery(query, clazz);
+    public TypedQuery<T> createQuery(String query) {
+        return em.createQuery(query, clazz);
     }
 
     public Query createNativeQuery(String query) {

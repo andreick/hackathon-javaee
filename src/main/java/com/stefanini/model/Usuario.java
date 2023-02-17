@@ -1,7 +1,5 @@
 package com.stefanini.model;
 
-import com.stefanini.dto.usuario.UsuarioCreateDTO;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -14,16 +12,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(nullable = false, length = 50)
     private String nome;
 
-    @Column(name = "login")
+    @Column(nullable = false, length = 20, unique = true)
     private String login;
 
-    @Column(name = "email")
+    @Column(nullable = false)
     private String email;
 
-    @Column(name = "senha")
+    @Column(nullable = false, length = 10)
     private String senha;
 
     @Column(name = "data_nascimento")
@@ -41,10 +39,6 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
     }
 
-    public Usuario(UsuarioCreateDTO dto) {
-        this(null, dto.getNome(), dto.getLogin(), dto.getEmail(), dto.getSenha(), dto.getDataNascimento());
-    }
-
     public Long getId() {
         return id;
     }
@@ -53,20 +47,40 @@ public class Usuario {
         return nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getSenha() {
         return senha;
     }
 
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public LocalDate getDataNascimento() {
         return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     @Override
