@@ -5,6 +5,7 @@ import com.stefanini.dto.usuario.UsuarioDetailsDTO;
 import com.stefanini.service.UsuarioService;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +22,7 @@ public class UsuarioResource {
     private UsuarioService usuarioService;
 
     @POST
-    public Response create(UsuarioCreateDTO dto, @Context UriInfo uriInfo) {
+    public Response create(@Valid UsuarioCreateDTO dto, @Context UriInfo uriInfo) {
         UsuarioDetailsDTO usuario = usuarioService.save(dto);
         var uriBuilder = uriInfo.getBaseUriBuilder();
         uriBuilder.path(usuario.getId().toString()); // Cabeçalho Location
