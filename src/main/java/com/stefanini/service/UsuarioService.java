@@ -8,7 +8,9 @@ import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,7 @@ public class UsuarioService {
 
     public List<UsuarioDetailsDTO> listAll() {
         List<Usuario> usuarios = usuarioDAO.listAll();
-        return usuarios.stream().map(UsuarioDetailsDTO::new).collect(Collectors.toList());
+        return mapAllToUsuarioDetailsDTO(usuarios);
     }
 
     public UsuarioDetailsDTO findById(Long id) {
@@ -48,6 +50,15 @@ public class UsuarioService {
         usuarioDAO.delete(usuario);
     }
 
+    public List<UsuarioDetailsDTO> listBirthdayPersons(Integer month) {
+        int monthValue = (month != null) ? month : LocalDate.now().getMonthValue();
+        if (monthValue < 1 || monthValue > 12) {
+            throw new BadRequestException("Mês " + monthValue + " inválido");
+        }
+        var usuarios = usuarioDAO.listBirthDayPersonsByMonth(monthValue);
+        return mapAllToUsuarioDetailsDTO(usuarios);
+    }
+
     public List<String> listEmailProviders() {
         return usuarioDAO.listEmailProviders();
     }
@@ -58,5 +69,9 @@ public class UsuarioService {
             throw new NotFoundException("Usuário com id " + id + " não encontrado");
         }
         return usuario;
+    }
+
+    private List<UsuarioDetailsDTO> mapAllToUsuarioDetailsDTO(List<Usuario> usuarios) {
+        return usuarios.stream().map(UsuarioDetailsDTO::new).collect(Collectors.toList());
     }
 }

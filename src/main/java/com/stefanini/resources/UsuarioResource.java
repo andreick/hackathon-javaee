@@ -12,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.time.LocalDate;
 import java.util.List;
 
 @Path("/usuarios")
@@ -55,6 +56,13 @@ public class UsuarioResource {
     public Response delete(@PathParam("id") Long id) {
         usuarioService.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/aniversariantes")
+    public Response readAllBirthdayPersons(@QueryParam("mes") Integer month) {
+        List<UsuarioDetailsDTO> usuarios = usuarioService.listBirthdayPersons(month);
+        return Response.ok(usuarios).build();
     }
 
     @GET
