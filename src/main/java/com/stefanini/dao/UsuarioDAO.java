@@ -3,17 +3,10 @@ package com.stefanini.dao;
 import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class UsuarioDAO extends GenericDAO<Usuario, Long> {
-
-    @Transactional
-    public void delete(Usuario usuario) {
-        var usuarioManaged = em.merge(usuario);
-        em.remove(usuarioManaged);
-    }
 
     public List<Usuario> listBirthDayPersonsByMonth(int month) {
         String jpql = "SELECT u FROM Usuario u WHERE MONTH(u.dataNascimento) = :month";
