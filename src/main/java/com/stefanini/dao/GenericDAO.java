@@ -43,9 +43,15 @@ public class GenericDAO<T, I>  {
     }
 
     @Transactional
-    public void delete(I id){
+    public void deleteById(I id){
         T t = findById(id);
         em.remove(t);
+    }
+
+    @Transactional
+    public void delete(T t){
+        T managed = em.merge(t);
+        em.remove(managed);
     }
 
     public TypedQuery<T> createQuery(String query) {
