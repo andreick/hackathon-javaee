@@ -2,6 +2,7 @@ package com.stefanini.resources;
 
 import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
+import com.stefanini.dto.usuario.UsuarioUpdateDTO;
 import com.stefanini.service.UsuarioService;
 
 import javax.inject.Inject;
@@ -37,8 +38,15 @@ public class UsuarioResource {
 
     @GET
     @Path("/{id}")
-    public Response readOne(@PathParam("id") Long id) {
+    public Response read(@PathParam("id") Long id) {
         UsuarioDetailsDTO usuario = usuarioService.findById(id);
+        return Response.ok(usuario).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response update(@PathParam("id") Long id, UsuarioUpdateDTO dto) {
+        UsuarioDetailsDTO usuario = usuarioService.update(id, dto);
         return Response.ok(usuario).build();
     }
 }

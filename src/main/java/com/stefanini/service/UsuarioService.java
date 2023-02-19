@@ -3,6 +3,7 @@ package com.stefanini.service;
 import com.stefanini.dao.UsuarioDAO;
 import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
+import com.stefanini.dto.usuario.UsuarioUpdateDTO;
 import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -29,10 +30,24 @@ public class UsuarioService {
     }
 
     public UsuarioDetailsDTO findById(Long id) {
+        var usuario = findByIdOrThrow(id);
+        return new UsuarioDetailsDTO(usuario);
+    }
+
+    public UsuarioDetailsDTO update(Long id, UsuarioUpdateDTO dto) {
+        var usuario = findByIdOrThrow(id);
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setDataNascimento(dto.getDataNascimento());
+        usuarioDAO.update(usuario);
+        return new UsuarioDetailsDTO(usuario);
+    }
+
+    private Usuario findByIdOrThrow(Long id) {
         var usuario = usuarioDAO.findById(id);
         if (usuario == null) {
             throw new NotFoundException("Usuário com id " + id + " não encontrado");
         }
-        return new UsuarioDetailsDTO(usuario);
+        return usuario;
     }
 }
