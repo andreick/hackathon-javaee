@@ -10,6 +10,7 @@ import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.UriInfo;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +27,18 @@ public class UsuarioService {
         return new UsuarioDetailsDTO(usuario);
     }
 
-    public List<UsuarioDetailsDTO> listAll() {
-        List<Usuario> usuarios = usuarioDAO.listAll();
+    public List<UsuarioDetailsDTO> listAll(UriInfo uriInfo) {
+        var usuarios = query(uriInfo);
         return mapAllToUsuarioDetailsDTO(usuarios);
+    }
+
+    private List<Usuario> query(UriInfo uriInfo) {
+        var queryParameters = uriInfo.getQueryParameters();
+        String nameStart = queryParameters.getFirst("nome_comeca_com");
+        if (nameStart != null) {
+            return usuarioDAO.listByNameLike(nameStart + "%");
+        }
+        return usuarioDAO.listAll();
     }
 
     public UsuarioDetailsDTO findById(Long id) {

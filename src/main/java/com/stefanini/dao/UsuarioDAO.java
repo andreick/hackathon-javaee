@@ -24,4 +24,9 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
         String jpql = "SELECT DISTINCT(SUBSTRING(u.email, LOCATE('@', u.email) + 1, LENGTH(u.email))) FROM Usuario u";
         return em.createQuery(jpql, String.class).getResultList();
     }
+
+    public List<Usuario> listByNameLike(String pattern) {
+        String jpql = "SELECT u FROM Usuario u WHERE u.nome like :pattern";
+        return createQuery(jpql).setParameter("pattern", pattern).getResultList();
+    }
 }

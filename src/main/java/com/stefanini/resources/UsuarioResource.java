@@ -12,7 +12,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.time.LocalDate;
 import java.util.List;
 
 @Path("/usuarios")
@@ -32,8 +31,8 @@ public class UsuarioResource {
     }
 
     @GET
-    public Response readAll() {
-        List<UsuarioDetailsDTO> usuarios = usuarioService.listAll();
+    public Response readAll(@Context UriInfo uriInfo) {
+        List<UsuarioDetailsDTO> usuarios = usuarioService.listAll(uriInfo);
         return Response.ok(usuarios).build();
     }
 
