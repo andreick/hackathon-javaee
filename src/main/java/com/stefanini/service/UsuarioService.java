@@ -4,12 +4,12 @@ import com.stefanini.dao.UsuarioDAO;
 import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
 import com.stefanini.dto.usuario.UsuarioUpdateDTO;
+import com.stefanini.exception.usuario.UsuarioNotFoundException;
+import com.stefanini.exception.util.InvalidMonthException;
 import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +53,7 @@ public class UsuarioService {
     public List<UsuarioDetailsDTO> listBirthdayPersons(Integer month) {
         int monthValue = (month != null) ? month : LocalDate.now().getMonthValue();
         if (monthValue < 1 || monthValue > 12) {
-            throw new BadRequestException("Mês " + monthValue + " inválido");
+            throw new InvalidMonthException(monthValue);
         }
         var usuarios = usuarioDAO.listBirthDayPersonsByMonth(monthValue);
         return mapAllToUsuarioDetailsDTO(usuarios);
@@ -66,7 +66,7 @@ public class UsuarioService {
     private Usuario findByIdOrThrow(Long id) {
         var usuario = usuarioDAO.findById(id);
         if (usuario == null) {
-            throw new NotFoundException("Usuário com id " + id + " não encontrado");
+            throw new UsuarioNotFoundException(id);
         }
         return usuario;
     }
