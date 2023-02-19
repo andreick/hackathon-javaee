@@ -21,13 +21,13 @@ public class UsuarioService {
     @Inject
     private UsuarioDAO usuarioDAO;
 
-    public UsuarioDetailsDTO save(UsuarioCreateDTO dto) {
+    public UsuarioDetailsDTO create(UsuarioCreateDTO dto) {
         var usuario = dto.toUsuario();
         usuarioDAO.save(usuario);
         return new UsuarioDetailsDTO(usuario);
     }
 
-    public List<UsuarioDetailsDTO> listAll(UriInfo uriInfo) {
+    public List<UsuarioDetailsDTO> getAll(UriInfo uriInfo) {
         var usuarios = query(uriInfo);
         return mapAllToUsuarioDetailsDTO(usuarios);
     }
@@ -41,7 +41,7 @@ public class UsuarioService {
         return usuarioDAO.listAll();
     }
 
-    public UsuarioDetailsDTO findById(Long id) {
+    public UsuarioDetailsDTO getById(Long id) {
         var usuario = findByIdOrThrow(id);
         return new UsuarioDetailsDTO(usuario);
     }
@@ -60,7 +60,7 @@ public class UsuarioService {
         usuarioDAO.delete(usuario);
     }
 
-    public List<UsuarioDetailsDTO> listBirthdayPersons(Integer month) {
+    public List<UsuarioDetailsDTO> getBirthdayPersons(Integer month) {
         int monthValue = (month != null) ? month : LocalDate.now().getMonthValue();
         if (monthValue < 1 || monthValue > 12) {
             throw new InvalidMonthException(monthValue);
@@ -69,7 +69,7 @@ public class UsuarioService {
         return mapAllToUsuarioDetailsDTO(usuarios);
     }
 
-    public List<String> listEmailProviders() {
+    public List<String> getEmailProviders() {
         return usuarioDAO.listEmailProviders();
     }
 

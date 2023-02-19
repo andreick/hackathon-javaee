@@ -24,7 +24,7 @@ public class UsuarioResource {
 
     @POST
     public Response create(@Valid UsuarioCreateDTO dto, @Context UriInfo uriInfo) {
-        UsuarioDetailsDTO usuario = usuarioService.save(dto);
+        UsuarioDetailsDTO usuario = usuarioService.create(dto);
         var uriBuilder = uriInfo.getBaseUriBuilder();
         uriBuilder.path(usuario.getId().toString()); // Cabeçalho Location
         return Response.created(uriBuilder.build()).entity(usuario).build();
@@ -32,14 +32,14 @@ public class UsuarioResource {
 
     @GET
     public Response readAll(@Context UriInfo uriInfo) {
-        List<UsuarioDetailsDTO> usuarios = usuarioService.listAll(uriInfo);
+        List<UsuarioDetailsDTO> usuarios = usuarioService.getAll(uriInfo);
         return Response.ok(usuarios).build();
     }
 
     @GET
     @Path("/{id}")
     public Response read(@PathParam("id") Long id) {
-        UsuarioDetailsDTO usuario = usuarioService.findById(id);
+        UsuarioDetailsDTO usuario = usuarioService.getById(id);
         return Response.ok(usuario).build();
     }
 
@@ -60,14 +60,14 @@ public class UsuarioResource {
     @GET
     @Path("/aniversariantes")
     public Response readAllBirthdayPersons(@QueryParam("mes") Integer month) {
-        List<UsuarioDetailsDTO> usuarios = usuarioService.listBirthdayPersons(month);
+        List<UsuarioDetailsDTO> usuarios = usuarioService.getBirthdayPersons(month);
         return Response.ok(usuarios).build();
     }
 
     @GET
     @Path("/provedores-email")
     public Response readAllEmailProviders() {
-        List<String> providers = usuarioService.listEmailProviders();
+        List<String> providers = usuarioService.getEmailProviders();
         return Response.ok(providers).build();
     }
 }
