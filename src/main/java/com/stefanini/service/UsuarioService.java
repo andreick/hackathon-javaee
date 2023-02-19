@@ -43,6 +43,11 @@ public class UsuarioService {
         return new UsuarioDetailsDTO(usuario);
     }
 
+    public void delete(Long id) {
+        var usuario = findByIdOrThrow(id);
+        usuarioDAO.delete(usuario);
+    }
+
     private Usuario findByIdOrThrow(Long id) {
         var usuario = usuarioDAO.findById(id);
         if (usuario == null) {
