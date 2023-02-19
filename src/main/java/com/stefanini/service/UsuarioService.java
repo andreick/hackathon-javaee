@@ -48,6 +48,10 @@ public class UsuarioService {
         usuarioDAO.delete(usuario);
     }
 
+    public List<String> listEmailProviders() {
+        return usuarioDAO.listEmailProviders();
+    }
+
     private Usuario findByIdOrThrow(Long id) {
         var usuario = usuarioDAO.findById(id);
         if (usuario == null) {

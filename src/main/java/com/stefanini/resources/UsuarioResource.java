@@ -56,4 +56,11 @@ public class UsuarioResource {
         usuarioService.delete(id);
         return Response.noContent().build();
     }
+
+    @GET
+    @Path("/provedores-email")
+    public Response readAllEmailProviders() {
+        List<String> providers = usuarioService.listEmailProviders();
+        return Response.ok(providers).build();
+    }
 }
