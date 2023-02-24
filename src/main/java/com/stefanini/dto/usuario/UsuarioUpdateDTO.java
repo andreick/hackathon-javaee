@@ -1,9 +1,8 @@
 package com.stefanini.dto.usuario;
 
-import com.stefanini.validation.constraints.DateFormat;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -18,10 +17,10 @@ public class UsuarioUpdateDTO {
     @Size(min = 10, max = 255)
     private final String email;
 
-    @DateFormat(pattern = "yyyy-MM-dd")
-    private final String dataNascimento;
+    @Past
+    private final LocalDate dataNascimento;
 
-    public UsuarioUpdateDTO(String nome, String email, String dataNascimento) {
+    public UsuarioUpdateDTO(String nome, String email, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.dataNascimento = dataNascimento;
@@ -36,6 +35,6 @@ public class UsuarioUpdateDTO {
     }
 
     public LocalDate getDataNascimento() {
-        return dataNascimento != null ? LocalDate.parse(dataNascimento) : null;
+        return dataNascimento;
     }
 }

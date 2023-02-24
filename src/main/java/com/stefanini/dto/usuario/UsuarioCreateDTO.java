@@ -1,10 +1,10 @@
 package com.stefanini.dto.usuario;
 
 import com.stefanini.model.Usuario;
-import com.stefanini.validation.constraints.DateFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -19,8 +19,8 @@ public class UsuarioCreateDTO {
     @Size(min = 10, max = 255)
     private final String email;
 
-    @DateFormat(pattern = "yyyy-MM-dd")
-    private final String dataNascimento;
+    @Past
+    private final LocalDate dataNascimento;
 
     @NotBlank
     @Size(min = 5, max = 20)
@@ -30,7 +30,7 @@ public class UsuarioCreateDTO {
     @Size(min = 4, max = 10)
     private final String senha;
 
-    public UsuarioCreateDTO(String nome, String email, String dataNascimento, String login, String senha) {
+    public UsuarioCreateDTO(String nome, String email, LocalDate dataNascimento, String login, String senha) {
         this.nome = nome;
         this.email = email;
         this.dataNascimento = dataNascimento;
@@ -39,8 +39,7 @@ public class UsuarioCreateDTO {
     }
 
     public Usuario toUsuario() {
-        LocalDate date = dataNascimento != null ? LocalDate.parse(dataNascimento) : null;
-        return new Usuario(null, nome, login, email, senha, date);
+        return new Usuario(null, nome, login, email, senha, dataNascimento);
     }
 
     public String getNome() {
@@ -51,7 +50,7 @@ public class UsuarioCreateDTO {
         return email;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 

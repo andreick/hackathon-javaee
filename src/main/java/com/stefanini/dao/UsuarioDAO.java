@@ -14,7 +14,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Long> {
     }
 
     public List<String> listEmailProviders() {
-        String jpql = "SELECT DISTINCT(SUBSTRING(u.email, LOCATE('@', u.email) + 1, LENGTH(u.email))) FROM Usuario u";
+        String jpql = "SELECT DISTINCT(SUBSTRING(u.email, LOCATE('@', u.email) + 1)) FROM Usuario u";
         return em.createQuery(jpql, String.class).getResultList();
     }
 
