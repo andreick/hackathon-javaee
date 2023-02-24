@@ -45,7 +45,7 @@ public class UsuarioResource {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, UsuarioUpdateDTO dto) {
+    public Response update(@PathParam("id") Long id, @Valid UsuarioUpdateDTO dto) {
         UsuarioDetailsDTO usuario = usuarioService.update(id, dto);
         return Response.ok(usuario).build();
     }
