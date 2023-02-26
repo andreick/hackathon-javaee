@@ -1,11 +1,9 @@
 package com.stefanini.dto.usuario;
 
 import com.stefanini.model.Usuario;
+import com.stefanini.validation.constraints.Password;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class UsuarioCreateDTO {
@@ -27,6 +25,7 @@ public class UsuarioCreateDTO {
     private final String login;
 
     @NotBlank
+    @Password
     @Size(min = 4, max = 10)
     private final String senha;
 

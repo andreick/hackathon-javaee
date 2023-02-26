@@ -3,7 +3,7 @@ package com.stefanini.resources;
 import com.stefanini.dto.usuario.UsuarioCreateDTO;
 import com.stefanini.dto.usuario.UsuarioDetailsDTO;
 import com.stefanini.dto.usuario.UsuarioUpdateDTO;
-import com.stefanini.service.UsuarioService;
+import com.stefanini.service.usuario.UsuarioService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;

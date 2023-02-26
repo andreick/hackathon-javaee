@@ -4,9 +4,15 @@ import com.stefanini.model.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class UsuarioDAO extends GenericDAO<Usuario, Long> {
+
+    public Optional<Usuario> findByLogin(String login) {
+        String query = "SELECT u FROM Usuario u WHERE u.login = :login";
+        return createQuery(query).setParameter("login", login).getResultList().stream().findFirst();
+    }
 
     public List<Usuario> listBirthDayPersonsByMonth(int month) {
         String jpql = "SELECT u FROM Usuario u WHERE MONTH(u.dataNascimento) = :month";
